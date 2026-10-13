@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ASSETS } from '../data/assets';
 import { INVITATION } from '../data/invitation';
@@ -23,8 +24,22 @@ export function InvitationCard({ revealed }: { revealed: boolean }) {
   };
   const state = revealed ? 'shown' : 'hidden';
 
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const scrollToNext = () => {
+    const next = sectionRef.current?.nextElementSibling as HTMLElement | null;
+    if (next) window.scrollTo({ top: next.offsetTop, behavior: reduce ? 'auto' : 'smooth' });
+  };
+
   return (
-    <section className="flex min-h-[100svh] flex-col items-center justify-center px-4 pb-6 pt-[4.5rem]">
+    <section ref={sectionRef} className="flex min-h-[100svh] flex-col items-center justify-center px-4 pb-6 pt-[4.5rem]">
       <motion.div
         className="invite-card"
         initial={{ opacity: 0, scale: 0.97 }}
@@ -77,16 +92,22 @@ export function InvitationCard({ revealed }: { revealed: boolean }) {
         {revealed && !reduce && <div className="card-sheen" aria-hidden="true" />}
       </motion.div>
 
-      <motion.div
-        className="mt-5 flex flex-col items-center gap-2"
+      <motion.button
+        type="button"
+        onClick={scrollToNext}
+        className="scroll-cue mt-4"
         initial={{ opacity: 0 }}
-        animate={{ opacity: revealed ? 1 : 0 }}
-        transition={{ duration: 1.2, delay: revealed ? 3.4 : 0 }}
-        aria-hidden="true"
+        animate={{ opacity: revealed && !scrolled ? 1 : 0 }}
+        transition={{ duration: scrolled ? 0.5 : 1.2, delay: revealed && !scrolled ? 3.4 : 0 }}
+        aria-label="Scroll down for the details"
+        tabIndex={revealed && !scrolled ? 0 : -1}
       >
-        <span className="label">Scroll</span>
-        <span className="scroll-line" />
-      </motion.div>
+        <span className="label !text-maroon">Scroll down</span>
+        <svg width="18" height="20" viewBox="0 0 18 20" fill="none" aria-hidden="true">
+          <path className="chev" d="M3 3l6 6 6-6" />
+          <path className="chev chev-2" d="M3 10l6 6 6-6" />
+        </svg>
+      </motion.button>
     </section>
   );
 }

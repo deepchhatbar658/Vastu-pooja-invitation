@@ -19,9 +19,8 @@ export function Welcome() {
         muted
         playsInline
         preload="metadata"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="feather-mask absolute inset-0 h-full w-full object-cover"
       />
-      <div className="feather-ivory absolute inset-0" aria-hidden="true" />
 
       <div className="relative mx-auto max-w-[480px] px-8 pt-10 text-center">
         <Reveal>

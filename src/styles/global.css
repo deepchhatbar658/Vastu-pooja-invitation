@@ -275,35 +275,30 @@ body {
     animation: card-sheen 2.2s var(--ease-gentle) 3s forwards;
   }
 
-  .scroll-line {
-    position: relative;
-    width: 1px;
-    height: 34px;
-    overflow: hidden;
-    background: linear-gradient(rgb(168 132 67 / 0.6), rgb(168 132 67 / 0));
+  .scroll-cue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 1.25rem 0.25rem;
   }
-  .scroll-line::after {
-    content: "";
-    position: absolute;
-    left: -1.5px;
-    top: 0;
-    width: 4px;
-    height: 4px;
-    border-radius: 999px;
-    background: var(--color-gold);
-    animation: scroll-dot 2.6s var(--ease-gentle) infinite;
+  .scroll-cue .chev {
+    stroke: var(--color-gold);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: chev-flow 2s ease-in-out infinite;
+  }
+  .scroll-cue .chev-2 {
+    animation-delay: 0.25s;
   }
 
   /* ----- Section treatments ----- */
-  .feather-ivory {
-    background: linear-gradient(
-      180deg,
-      var(--color-ivory) 0%,
-      rgb(244 236 221 / 0.9) 22%,
-      rgb(244 236 221 / 0) 52%,
-      rgb(244 236 221 / 0) 80%,
-      var(--color-ivory) 100%
-    );
+  /* Fades a full-bleed film into the page itself, so there is no edge or colour seam. */
+  .feather-mask {
+    --feather: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 0.1) 22%, #000 52%, #000 80%, transparent 100%);
+    -webkit-mask-image: var(--feather);
+    mask-image: var(--feather);
   }
 
   .closing-scrim {
@@ -346,17 +341,18 @@ body {
   }
 }
 
-@keyframes scroll-dot {
+@keyframes chev-flow {
   0% {
-    transform: translateY(-6px);
     opacity: 0;
+    transform: translateY(-3px);
   }
-  30% {
+  35% {
     opacity: 1;
   }
+  75%,
   100% {
-    transform: translateY(34px);
     opacity: 0;
+    transform: translateY(4px);
   }
 }
 

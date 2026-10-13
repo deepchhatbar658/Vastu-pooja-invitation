@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ASSETS } from './data/assets';
 import { useSoundtrack } from './hooks/useSoundtrack';
+import { useScrollNudge } from './hooks/useScrollNudge';
 import { MusicToggle } from './components/MusicToggle';
 import { Opening } from './sections/Opening';
 import { InvitationCard } from './sections/InvitationCard';
@@ -17,6 +18,7 @@ export default function App() {
   const [opened, setOpened] = useState(false);
   const [openingRun, setOpeningRun] = useState(0);
   const music = useSoundtrack(ASSETS.audio.soundtrack);
+  const nudge = useScrollNudge(opened);
 
   // Match the browser chrome to what's on screen: dark gate, ivory page.
   useEffect(() => {
@@ -37,13 +39,13 @@ export default function App() {
 
       {opened && <MusicToggle muted={music.muted || !music.started} onToggle={music.toggleMute} />}
 
-      <main aria-hidden={!opened}>
+      <motion.main aria-hidden={!opened} animate={nudge}>
         <InvitationCard revealed={opened} />
         <Welcome />
         <Schedule />
         <Venue />
         <Closing onReplay={replay} />
-      </main>
+      </motion.main>
     </>
   );
 }
