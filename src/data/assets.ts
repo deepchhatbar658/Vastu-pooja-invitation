@@ -1,36 +1,30 @@
-// Direct asset imports for Vite bundler
-import doorClosedImg from '../assets/door_closed.png';
-import doorOpenImg from '../assets/door_open.png';
-import homeEntranceImg from '../assets/home_entrance.png';
-import invitationParchmentImg from '../assets/invitation_parchment.png';
-import pujaArrangementImg from '../assets/puja_arrangement.png';
-import prasadLunchImg from '../assets/prasad_and_lunch.jpg';
-import homeAtDuskImg from '../assets/home_at_dusk.jpg';
+import invitationCard from '../assets/media/invitation_card.webp';
+import pujaArrangement from '../assets/media/puja_arrangement.webp';
+import prasadLunch from '../assets/media/prasad_lunch.webp';
+import homeAtDusk from '../assets/media/home_at_dusk.webp';
 
-// Video asset imports
-import doorRevealVideo from '../assets/door_reveal.mp4';
-import hallwayVideo from '../assets/hallway_glide.mp4';
-import pujaCinematicVideo from '../assets/puja_cinematic.mp4';
+import doorReveal from '../assets/media/door_reveal.mp4';
+import doorRevealPoster from '../assets/media/door_reveal_poster.webp';
+import hallwayGlide from '../assets/media/hallway_glide.mp4';
+import hallwayGlidePoster from '../assets/media/hallway_glide_poster.webp';
+import pujaCinematic from '../assets/media/puja_cinematic.mp4';
+import pujaCinematicPoster from '../assets/media/puja_cinematic_poster.webp';
 
-export const ASSET_MANIFEST = {
+// Full-resolution originals live in /source-assets. The files imported here are
+// mobile-sized exports of them (WebP images, 720p H.264 video without audio).
+export const ASSETS = {
   images: {
-    doorClosed: doorClosedImg,
-    doorOpen: doorOpenImg,
-    homeEntrance: homeEntranceImg,
-    invitationParchment: invitationParchmentImg,
-    pujaArrangement: pujaArrangementImg,
-    prasadLunch: prasadLunchImg,
-    homeAtDusk: homeAtDuskImg,
+    invitationCard,
+    pujaArrangement,
+    prasadLunch,
+    homeAtDusk,
   },
   videos: {
-    doorReveal: doorRevealVideo,
-    hallwayGlide: hallwayVideo,
-    pujaCinematic: pujaCinematicVideo,
+    doorReveal: { src: doorReveal, poster: doorRevealPoster },
+    hallwayGlide: { src: hallwayGlide, poster: hallwayGlidePoster },
+    pujaCinematic: { src: pujaCinematic, poster: pujaCinematicPoster },
   },
   audio: {
     soundtrack: '/soundtrack.m4a',
-    audioIntro: '/audio_intro.m4a',
-    audioScene2: '/audio_scene2.m4a',
-    audioScene3: '/audio_scene3.m4a',
-  }
+  },
 };

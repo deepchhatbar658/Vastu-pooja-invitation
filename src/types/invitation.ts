@@ -1,15 +1,16 @@
-export type SceneId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
-
-export interface SceneMeta {
-  id: SceneId;
-  name: string;
-  duration: number; // in seconds
-  titleEn: string;
-  titleGu: string;
+export interface Bilingual {
+  en: string;
+  gu: string;
 }
 
-export interface HostCouple {
-  names: string;
+export interface ScheduleItem {
+  id: 'pooja' | 'bhojan';
+  /** One-word label used on the invitation card, e.g. "Pooja". */
+  short: string;
+  time: Bilingual;
+  title: Bilingual;
+  note: string;
+  image: string;
 }
 
 export interface InvitationData {
@@ -17,54 +18,31 @@ export interface InvitationData {
     title: string;
     description: string;
   };
-  invocation: {
-    text: string;
-    subtextEn: string;
-  };
+  invocation: string;
   event: {
-    titleEn: string;
-    titleGu: string;
-    subheadingEn: string;
-    subheadingGu: string;
+    title: Bilingual;
+    tagline: Bilingual;
   };
   hosts: {
-    familyTitle?: string;
-    couples: HostCouple[];
+    surname: string;
+    couples: string[];
   };
-  schedule: {
-    date: {
-      en: string;
-      gu: string;
-      iso: string;
-    };
-    ceremony: {
-      titleEn: string;
-      titleGu: string;
-      timeEn: string;
-      timeGu: string;
-      note?: string;
-    };
-    lunch: {
-      titleEn: string;
-      titleGu: string;
-      timeEn: string;
-      timeGu: string;
-      note?: string;
-    };
+  date: Bilingual & {
+    /** Start of the ceremony, with IST offset. Used for the calendar entry. */
+    start: string;
+    /** Approximate end of the day's programme, for the calendar entry. */
+    end: string;
   };
+  schedule: ScheduleItem[];
   venue: {
-    address: string;
-    area: string;
-    city: string;
-    fullText: string;
+    line1: string;
+    line2: string;
+    /** Paste the exact Google Maps share link here to pin the building precisely. */
+    mapsUrl: string;
   };
-  blessings: {
-    textGu: string;
-    textEn: string;
-  };
-  closing: {
-    textGu: string;
-    textEn: string;
-    signOffEn: string;
+  welcome: Bilingual;
+  blessings: Bilingual;
+  closing: Bilingual & {
+    signOff: string;
   };
 }
